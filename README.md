@@ -1,6 +1,6 @@
 # RestauranteMango
 
-# Libreriás
+# Librerías
 - AutoMapper
 - Swashbuckle.AspNetCore.SwaggerUI
 - Swashbuckle.AspNetCore.Annotations
