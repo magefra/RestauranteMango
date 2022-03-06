@@ -107,5 +107,27 @@ namespace Mango.Services.ProductAPI.Controllers
         }
 
 
+        [HttpDelete]
+        public async Task<object> Delete(int id)
+        {
+            try
+            {
+                bool isSuccess=
+                    await _productRepository.DeleteProduct(id);
+
+                _response.Result = isSuccess;
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccess = false;
+                _response.ErrorMessages
+                    = new List<string> { ex.ToString() };
+            }
+
+            return _response;
+        }
+
+
     }
 }
