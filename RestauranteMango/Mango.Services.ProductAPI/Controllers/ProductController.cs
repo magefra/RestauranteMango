@@ -64,5 +64,27 @@ namespace Mango.Services.ProductAPI.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<object> Post([FromBody] ProductDto productDto)
+        {
+            try
+            {
+                ProductDto model =
+                    await _productRepository.CreteUpdateProduct(productDto);
+
+                _response.Result = model;
+            }
+            catch (Exception ex)
+            {
+
+                _response.IsSuccess = false;
+                _response.ErrorMessages
+                    = new List<string> { ex.ToString() };
+            }
+
+            return _response;
+        }
+
+
     }
 }
