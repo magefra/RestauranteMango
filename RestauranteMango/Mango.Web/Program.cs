@@ -12,6 +12,8 @@ Mango.Web.SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProducAPI"];
 builder.Services.AddScoped<IProductService, ProductService>();
 
 
+builder.Services.AddControllersWithViews();
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultScheme = "Cookies";

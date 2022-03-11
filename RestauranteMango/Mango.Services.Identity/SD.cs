@@ -15,15 +15,14 @@ namespace Mango.Services.Identity
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Email(),
-                new IdentityResources.Profile(),
+                new IdentityResources.Profile()
 
-
-            };
+    };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>()
             {
-                new ApiScope("Mango","Mango Server"),
+                new ApiScope("mango","Mango Server"),
                 new ApiScope(name:"read", displayName: "Read your data."),
                 new ApiScope(name: "write", displayName: "Write your data"),
                 new ApiScope(name:"delete", displayName: "Delete your data")
@@ -34,24 +33,24 @@ namespace Mango.Services.Identity
             {
                 new Client
                 {
-                    ClientId = "client",
-                    ClientSecrets = {new Secret("secret".Sha256())},
+                   ClientId="client",
+                    ClientSecrets= { new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = {"read", "write", "profile"}
+                    AllowedScopes={ "read", "write","profile"}
                 },
                  new Client
                 {
                     ClientId = "mango",
-                    ClientSecrets = {new Secret("secret".Sha256())},
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    RedirectUris = { "http://localhost:44357/signin-oidc" },
-                    PostLogoutRedirectUris={ "http://localhost:44357/signout-callback-oidc" },
+                     ClientSecrets= { new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RedirectUris = { "http://localhost:44386/signin-oidc" },
+                    PostLogoutRedirectUris={ "http://localhost:44386/signout-callback-oidc" },
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                          IdentityServerConstants.StandardScopes.Email,
-                         "Mango"
+                         "mango"
                     }
                 }
             };

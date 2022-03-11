@@ -17,15 +17,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 });
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
-var identity = builder.Services.AddIdentityServer(opt =>
+var identity = builder.Services.AddIdentityServer(options =>
 {
-    opt.Events.RaiseErrorEvents = true;
-    opt.Events.RaiseInformationEvents = true;
-    opt.Events.RaiseFailureEvents = true;
-    opt.Events.RaiseSuccessEvents = true;
-    opt.EmitStaticAudienceClaim = true;
+    options.Events.RaiseErrorEvents = true;
+    options.Events.RaiseInformationEvents = true;
+    options.Events.RaiseFailureEvents = true;
+    options.Events.RaiseSuccessEvents = true;
+    options.EmitStaticAudienceClaim = true;
 })
 .AddInMemoryIdentityResources(SD.IdentityResources)
 .AddInMemoryApiScopes(SD.ApiScopes)
@@ -56,14 +57,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseIdentityServer();
-
-
-
-
-
 app.UseAuthorization();
-
-
 
 app.MapRazorPages()
              .RequireAuthorization();
