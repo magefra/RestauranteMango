@@ -10,7 +10,7 @@ builder.Services.AddHttpClient<IProductService, ProductService>();
 Mango.Web.SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProducAPI"];
 
 builder.Services.AddScoped<IProductService, ProductService>();
-
+var url = builder.Configuration["ServiceUrls:IdentityAPI"];
 
 builder.Services.AddControllersWithViews();
 
