@@ -1,8 +1,13 @@
+using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
+using IdentityModel;
+using Mango.Services.Identity.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace Mango.Services.Identity.Pages.Account.Register
 {
@@ -19,17 +24,27 @@ namespace Mango.Services.Identity.Pages.Account.Register
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IClientStore _clientStore;
-
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IEventService _events;
 
         public Index(
                     IIdentityServerInteractionService interaction,
                     IAuthenticationSchemeProvider schemeProvider,
-                    IClientStore clientStore)
+                    IClientStore clientStore,
+                    UserManager<ApplicationUser> userManager,
+                    RoleManager<IdentityRole> roleInManager,
+                    SignInManager<ApplicationUser> signInManager,
+                    IEventService events)
         {
             _interaction = interaction;
             _schemeProvider = schemeProvider;
             _clientStore = clientStore;
-
+            _userManager = userManager;
+            _roleInManager = roleInManager;
+            _signInManager = signInManager;
+            _events = events;
         }
 
         public async Task<IActionResult> OnGet(string returnUrl)
@@ -47,7 +62,100 @@ namespace Mango.Services.Identity.Pages.Account.Register
 
 
 
+        public async Task<IActionResult> OnPost()
+        {
 
+
+            if (ModelState.IsValid)
+            {
+
+                var user = new ApplicationUser
+                {
+                    UserName = Input.Username,
+                    Email = Input.Email,
+                    EmailConfirmed = true,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName
+                };
+
+
+                var result = await _userManager.CreateAsync(user, Input.Password);
+                if (result.Succeeded)
+                {
+
+                    if (!_roleInManager.RoleExistsAsync(Input.RoleName).GetAwaiter().GetResult())
+                    {
+                        var userRole = new IdentityRole
+                        {
+                            Name = Input.RoleName,
+                            NormalizedName = Input.RoleName,
+
+                        };
+                        await _roleInManager.CreateAsync(userRole);
+                    }
+
+                    await _userManager.AddToRoleAsync(user, Input.RoleName);
+
+
+
+                    await _userManager.AddClaimsAsync(user, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, Input.Username),
+                            new Claim(JwtClaimTypes.Email, Input.Email),
+                            new Claim(JwtClaimTypes.FamilyName, Input.FirstName),
+                            new Claim(JwtClaimTypes.GivenName, Input.LastName),
+                            new Claim(JwtClaimTypes.WebSite, "http://"+Input.Username+".com"),
+                            new Claim(JwtClaimTypes.Role,"User") });
+
+
+
+
+                    var context = await _interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
+                    var loginresult = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, false, lockoutOnFailure: true);
+
+
+                    if (loginresult.Succeeded)
+                    {
+                        var checkuser = await _userManager.FindByNameAsync(Input.Username);
+                        await _events.RaiseAsync(new UserLoginSuccessEvent(checkuser.UserName, checkuser.Id, checkuser.UserName, clientId: context?.Client.ClientId));
+
+                        if (context != null)
+                        {
+                            if (context.IsNativeClient())
+                            {
+                                // The client is native, so this change in how to
+                                // return the response is for better UX for the end user.
+                                return this.LoadingPage(Input.ReturnUrl);
+                            }
+
+                            // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+                            return Redirect(Input.ReturnUrl);
+                        }
+
+                        // request for a local page
+                        if (Url.IsLocalUrl(Input.ReturnUrl))
+                        {
+                            return Redirect(Input.ReturnUrl);
+                        }
+                        else if (string.IsNullOrEmpty(Input.ReturnUrl))
+                        {
+                            return Redirect("~/");
+                        }
+                        else
+                        {
+                            // user might have clicked on a malicious link - should be logged
+                            throw new Exception("invalid return URL");
+                        }
+                    }
+
+                }
+
+
+            }
+
+            // something went wrong, show form with error
+            await BuildModelAsync(Input.ReturnUrl);
+            return Page();
+        }
 
 
 
