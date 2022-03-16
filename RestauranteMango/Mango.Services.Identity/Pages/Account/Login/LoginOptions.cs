@@ -1,5 +1,3 @@
-using System;
-
 namespace Mango.Services.Identity.Pages.Login;
 
 public class LoginOptions

@@ -17,6 +17,7 @@ public class Index : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
     private readonly IIdentityServerInteractionService _interaction;
     private readonly IClientStore _clientStore;
@@ -36,10 +37,12 @@ public class Index : PageModel
           IIdentityProviderStore identityProviderStore,
           IEventService events,
           UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager)
+          SignInManager<ApplicationUser> signInManager,
+          RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _roleManager = roleManager;
         _interaction = interaction;
         _clientStore = clientStore;
         _schemeProvider = schemeProvider;
@@ -147,6 +150,9 @@ public class Index : PageModel
         };
 
         var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+
+
+
         if (context?.IdP != null && await _schemeProvider.GetSchemeAsync(context.IdP) != null)
         {
             var local = context.IdP == Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider;
