@@ -1,6 +1,7 @@
 @page
 @model Mango.Services.Identity.Pages.Login.Index
 
+
 <div class="login-page">
     <div class="lead">
         <h1>Login</h1>
@@ -47,6 +48,10 @@
                             <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
                             <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
                         </form>
+                    </div>
+                    
+                    <div class="card-footer">
+                         <a  href="@Url.Page("/Account/Register/Index",new {Model.Input.ReturnUrl })">Nuevo registro</a>
                     </div>
                 </div>
             </div>

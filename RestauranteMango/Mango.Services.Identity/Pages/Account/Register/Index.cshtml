@@ -1,5 +1,5 @@
 ﻿@page
-@model Mango.Services.Identity.Pages.Account.Register.InputModel
+@model Mango.Services.Identity.Pages.Register.Index
 <div class="login-page">
     <div class="lead">
         <h1>Register</h1>
@@ -18,38 +18,38 @@
 
                 <div class="card-body">
                     <form asp-route="Login">
-                        <input type="hidden" asp-for="ReturnUrl" />
+                        <input type="hidden" asp-for="Input.ReturnUrl" />
 
                         <div class="form-group">
-                            <label asp-for="Username"></label>
-                            <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                            <label asp-for="Input.Username"></label>
+                            <input class="form-control" placeholder="Username" asp-for="Input.Username" autofocus>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Email"></label>
-                            <input class="form-control" placeholder="email" asp-for="Email" autofocus>
+                            <label asp-for="Input.Email"></label>
+                            <input class="form-control" placeholder="email" asp-for="Input.Email" autofocus>
                         </div>
                         <div class="form-group">
-                            <label asp-for="FirstName"></label>
-                            <input class="form-control" placeholder="first name" asp-for="FirstName" autofocus>
+                            <label asp-for="Input.FirstName"></label>
+                            <input class="form-control" placeholder="first name" asp-for="Input.FirstName" autofocus>
                         </div>
                         <div class="form-group">
-                            <label asp-for="LastName"></label>
-                            <input class="form-control" placeholder="lastname" asp-for="LastName" autofocus>
+                            <label asp-for="Input.LastName"></label>
+                            <input class="form-control" placeholder="lastname" asp-for="Input.LastName" autofocus>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Password"></label>
-                            <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                            <label asp-for="Input.Password"></label>
+                            <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <label asp-for="RoleName"></label>
-                            <select asp-for="RoleName" class="form-control" asp-items="@(new SelectList(ViewBag.message))"></select>
+                            <label asp-for="Input.RoleName"></label>
+                            <select asp-for="Input.RoleName" class="form-control" asp-items="@(new SelectList(ViewBag.message))"></select>
                         </div>
                         <button class="btn btn-primary" name="button" value="Register">Register</button>
                         <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
                     </form>
                 </div>
                 <div class="card-footer">
-                    <a href="@Url.Action("Login",new {Model.ReturnUrl })">Login</a>
+                    <a href="@Url.Action("Login",new {Model.Input.ReturnUrl})">Login</a>
                 </div>
             </div>
         </div>

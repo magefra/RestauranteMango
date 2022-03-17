@@ -3,14 +3,19 @@ using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using IdentityModel;
 using Mango.Services.Identity.Models;
+using Mango.Services.Identity.Pages.Account.Register;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 
-namespace Mango.Services.Identity.Pages.Account.Register
+namespace Mango.Services.Identity.Pages.Register
 {
+
+    [SecurityHeaders]
+    [AllowAnonymous]
     public class Index : PageModel
     {
         public ViewModel View { get; set; }
@@ -62,9 +67,11 @@ namespace Mango.Services.Identity.Pages.Account.Register
 
 
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(string returnUrl)
         {
 
+
+            Console.WriteLine(returnUrl);
 
             if (ModelState.IsValid)
             {
