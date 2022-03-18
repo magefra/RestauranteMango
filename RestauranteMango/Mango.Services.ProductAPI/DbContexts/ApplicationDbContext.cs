@@ -5,7 +5,7 @@ namespace Mango.Services.ProductAPI.DbContexts
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
 
@@ -20,7 +20,7 @@ namespace Mango.Services.ProductAPI.DbContexts
             modelBuilder.Entity<Product>().HasData(new Product
             {
                 ProductId = 1,
-                Name="Petacon",
+                Name = "Petacon",
                 Price = 14,
                 Description = "Mango presentativo de Veracruz",
                 ImageUrl = "",
