@@ -21,4 +21,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Dto\" />
+  </ItemGroup>
+
 </Project>
