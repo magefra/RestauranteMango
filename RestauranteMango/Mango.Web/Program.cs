@@ -8,8 +8,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient<IProductService, ProductService>();
 Mango.Web.SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProducAPI"];
+Mango.Web.SD.ShoppingCartAPIBase = builder.Configuration["ServiceUrls:ShoppingCartApi"];
+
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 var url = builder.Configuration["ServiceUrls:IdentityAPI"];
 
 builder.Services.AddControllersWithViews();
