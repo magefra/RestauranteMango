@@ -27,6 +27,9 @@ namespace Mango.Web.Controllers
         public async Task<IActionResult> Index()
         {
 
+            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
             List<ProductDto> products = new List<ProductDto>();
             var response = await _productService.GetAllProductsAsync<ResponseDto>("");
             if (response != null && response.IsSuccess)
