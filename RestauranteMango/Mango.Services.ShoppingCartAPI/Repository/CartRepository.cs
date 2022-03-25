@@ -73,7 +73,7 @@ namespace Mango.Services.ShoppingCartAPI.Repository
                 if (cartDetailsFromDb == null)
                 {
                     // Crear detalles
-                    cart.CartDetails.FirstOrDefault().CartDetailId = cartHeaderFromDb.CartHeaderId;
+                    cart.CartDetails.FirstOrDefault().CartHeaderId = cartHeaderFromDb.CartHeaderId;
                     cart.CartDetails.FirstOrDefault().Product = null;
                     _db.CartDetails.Add(cart.CartDetails.FirstOrDefault());
                     await _db.SaveChangesAsync();
