@@ -160,7 +160,8 @@ namespace Mango.Services.ShoppingCartAPI.Repository
                 CartDetails cartDetails = await _db.CartDetails
                     .FirstOrDefaultAsync(u => u.CartDetailId == cartDetailsId);
 
-                int totlCountOfCartItems = _db.CartDetails.Where(u => u.CartDetailId == cartDetails.CartDetailId).Count();
+                int totlCountOfCartItems = _db.CartDetails
+                    .Where(u => u.CartHeaderId == cartDetails.CartHeaderId).Count();
 
                 _db.CartDetails.Remove(cartDetails);
 
@@ -175,7 +176,7 @@ namespace Mango.Services.ShoppingCartAPI.Repository
                 await _db.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 return false;

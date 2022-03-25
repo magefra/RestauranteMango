@@ -52,5 +52,21 @@ namespace Mango.Web.Controllers
             return card;
 
         }
+
+        public async Task<IActionResult> Remove(int CartDetailId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _cartService.RemoveCartAsync<ResponseDto>(CartDetailId, accessToken);
+
+
+
+            if (response != null && response.IsSuccess)
+            {
+                return RedirectToAction(nameof(CartIndex));
+            }
+
+            return View();
+        }
     }
 }
