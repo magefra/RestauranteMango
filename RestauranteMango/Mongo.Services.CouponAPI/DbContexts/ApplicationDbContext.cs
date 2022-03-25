@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Mongo.Services.CouponAPI.Models;
 
 namespace Mongo.Services.CouponAPI.DbContexts
 {
@@ -9,5 +10,7 @@ namespace Mongo.Services.CouponAPI.DbContexts
         {
 
         }
+
+        public DbSet<Coupon> Coupons { get; set; }
     }
 }

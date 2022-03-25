@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Mongo.Services.CouponAPI.Models;
+using Mongo.Services.CouponAPI.Models.Dtos;
 
 namespace Mongo.Services.CouponAPI
 {
@@ -6,6 +8,7 @@ namespace Mongo.Services.CouponAPI
     {
         public MappingProfile()
         {
+            CreateMap<CouponDto, Coupon>().ReverseMap();
         }
     }
 }
