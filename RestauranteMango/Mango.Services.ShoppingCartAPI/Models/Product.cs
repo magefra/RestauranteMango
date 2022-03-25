@@ -14,5 +14,7 @@ namespace Mango.Services.ShoppingCartAPI.Models
         public string Description { get; set; }
         public string CategoryName { get; set; }
         public string ImageUrl { get; set; }
+        [NotMapped]
+        public List<CartDetails> CartDetails { get; set; }
     }
 }

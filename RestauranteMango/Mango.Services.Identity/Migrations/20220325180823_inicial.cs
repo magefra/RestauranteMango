@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace Mango.Services.ShoppingCartAPI.Migrations
+namespace Mango.Services.Identity.Migrations
 {
-    public partial class update : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

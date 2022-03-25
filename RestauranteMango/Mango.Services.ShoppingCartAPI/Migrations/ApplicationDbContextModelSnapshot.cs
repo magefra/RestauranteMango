@@ -40,10 +40,6 @@ namespace Mango.Services.ShoppingCartAPI.Migrations
 
                     b.HasKey("CartDetailId");
 
-                    b.HasIndex("CartHeaderId");
-
-                    b.HasIndex("ProductId");
-
                     b.ToTable("CartDetails");
                 });
 
@@ -95,25 +91,6 @@ namespace Mango.Services.ShoppingCartAPI.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Mango.Services.ShoppingCartAPI.Models.CartDetails", b =>
-                {
-                    b.HasOne("Mango.Services.ShoppingCartAPI.Models.CartHeader", "CartHeader")
-                        .WithMany()
-                        .HasForeignKey("CartHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Mango.Services.ShoppingCartAPI.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CartHeader");
-
-                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }
