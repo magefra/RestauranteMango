@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Mongo.Services.CouponAPI.DbContexts;
+using Mongo.Services.CouponAPI.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-//builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", opt =>
