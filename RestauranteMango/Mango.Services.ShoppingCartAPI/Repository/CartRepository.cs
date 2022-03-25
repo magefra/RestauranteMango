@@ -98,7 +98,9 @@ namespace Mango.Services.ShoppingCartAPI.Repository
 
                         try
                         {
-                            _db.CartDetails.Add(cart.CartDetails.FirstOrDefault());
+                            var details = cart.CartDetails.FirstOrDefault();
+                            _db.Entry(details).State = EntityState.Added;
+                            _db.CartDetails.Add(details);
                         }
                         catch (Exception ex)
                         {
@@ -115,7 +117,11 @@ namespace Mango.Services.ShoppingCartAPI.Repository
                         cart.CartDetails.FirstOrDefault().Count += cartDetailsFromDb.Count;
                         cart.CartDetails.FirstOrDefault().CartDetailId = cartDetailsFromDb.CartDetailId;
                         cart.CartDetails.FirstOrDefault().CartHeaderId = cartDetailsFromDb.CartHeaderId;
-                        _db.CartDetails.Update(cart.CartDetails.FirstOrDefault());
+
+                        var details = cart.CartDetails.FirstOrDefault();
+                        _db.Entry(details).State = EntityState.Modified;
+                        _db.CartDetails.Update(details);
+
                         await _db.SaveChangesAsync();
                     }
                 }
@@ -131,13 +137,15 @@ namespace Mango.Services.ShoppingCartAPI.Repository
 
         public async Task<CartDto> GetCartByUserId(string userId)
         {
-            Cart cart = new()
+            Cart cart = new Cart()
             {
                 CartHeader = await _db.CartHeaders.FirstOrDefaultAsync(u => u.UserId == userId)
             };
 
             cart.CartDetails = _db.CartDetails.Where(
-                u => u.CartDetailId == cart.CartHeader.CartHeaderId).Include(u => u.ProductId);
+                u => u.CartHeaderId == cart.CartHeader.CartHeaderId).Include(u => u.Product);
+
+
 
             return _mapper.Map<CartDto>(cart);
         }

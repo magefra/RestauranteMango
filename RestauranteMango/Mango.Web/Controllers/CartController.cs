@@ -4,6 +4,7 @@ using Mango.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace Mango.Web.Controllers
 {
@@ -29,8 +30,8 @@ namespace Mango.Web.Controllers
 
         private async Task<CartDto> LoadCartDtoBaseOnLoggedInUser()
         {
-            var userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
-            var accessToken = await HttpContext.GetTokenAsync("acces_token");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
             var response = await _cartService.GetCartByUserIdAsync<ResponseDto>(userId, accessToken);
 
             CartDto card = new CartDto();
