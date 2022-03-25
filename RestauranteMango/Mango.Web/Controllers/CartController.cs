@@ -1,10 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mango.Web.Services.IServices;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Mango.Web.Controllers
 {
     public class CartController : Controller
     {
-        public IActionResult Index()
+
+        private readonly IProductService _productService;
+        private readonly ICartService _cartService;
+
+        public CartController(IProductService productService,
+                              ICartService cartService)
+        {
+            _productService = productService;
+            _cartService = cartService;
+        }
+
+        public IActionResult CartIndex()
         {
             return View();
         }
