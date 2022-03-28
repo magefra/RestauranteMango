@@ -10,10 +10,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IProductService, ProductService>();
 Mango.Web.SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProducAPI"];
 Mango.Web.SD.ShoppingCartAPIBase = builder.Configuration["ServiceUrls:ShoppingCartApi"];
+Mango.Web.SD.CoupinAPIBase = builder.Configuration["ServiceUrls:CoupinAPI"];
 
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICouponervice, Couponervice>();
+
+
 var url = builder.Configuration["ServiceUrls:IdentityAPI"];
 
 builder.Services.AddControllersWithViews();

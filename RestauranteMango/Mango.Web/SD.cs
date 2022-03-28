@@ -5,6 +5,11 @@
         public static string ProductAPIBase { get; set; }
 
         public static string ShoppingCartAPIBase { get; set; }
+
+
+        public static string CoupinAPIBase { get; set; }
+
+
         public enum ApiType
         {
             GET,
