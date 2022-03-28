@@ -1,5 +1,4 @@
-﻿
-using Mango.Web.Models;
+﻿using Mango.Web.Models;
 using Mango.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -76,6 +75,30 @@ namespace Mango.Web.Controllers
             return View(await LoadCartDtoBaseOnLoggedInUser());
         }
 
+        [HttpPost()]
+        public async Task<IActionResult> Checkout(CartDto cartDto)
+        {
+            try
+            {
+                cartDto.CartHeader.CouponCode = cartDto.CartHeader.CouponCode == null ? "" : cartDto.CartHeader.CouponCode;
+
+
+                var accessToken = await HttpContext.GetTokenAsync("access_token");
+                var response = await _cartService.Checout<ResponseDto>(cartDto.CartHeader, accessToken);
+                return RedirectToAction(nameof(Confirmation));
+            }
+            catch (Exception ex)
+            {
+                return View(cartDto);
+                throw;
+            }
+        }
+
+
+        public async Task<IActionResult> Confirmation()
+        {
+            return View();
+        }
 
 
         private async Task<CartDto> LoadCartDtoBaseOnLoggedInUser()
