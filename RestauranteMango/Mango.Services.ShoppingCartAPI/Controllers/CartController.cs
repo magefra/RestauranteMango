@@ -6,13 +6,13 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 {
     [ApiController]
     [Route("api/cart")]
-    public class CartController : Controller
+    public class CartAPIController : Controller
     {
         private readonly ICartRepository _cartRepository;
         protected ResponseDto _response;
 
 
-        public CartController(ICartRepository cartRepository)
+        public CartAPIController(ICartRepository cartRepository)
         {
             _cartRepository = cartRepository;
             _response = new ResponseDto();
@@ -130,11 +130,11 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
 
         [HttpPost("RemoveCoupon")]
-        public async Task<object> RemoveCoupon([FromBody] int userId)
+        public async Task<object> RemoveCoupon([FromBody] string userId)
         {
             try
             {
-                var isSuccess = await _cartRepository.RemoveCoupon(userId.ToString());
+                var isSuccess = await _cartRepository.RemoveCoupon(userId);
                 _response.Result = isSuccess;
 
             }
