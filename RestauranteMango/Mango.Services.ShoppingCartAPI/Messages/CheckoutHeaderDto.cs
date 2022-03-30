@@ -15,7 +15,7 @@ namespace Mango.Services.ShoppingCartAPI.Messages
         public double DiscountTotal { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime PickupDatatime { get; set; }
+        public DateTime PickupDateTime { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string CardNumber { get; set; }
