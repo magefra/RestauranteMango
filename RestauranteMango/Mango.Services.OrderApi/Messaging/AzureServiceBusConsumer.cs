@@ -9,11 +9,54 @@ namespace Mango.Services.OrderApi.Messaging
 {
     public class AzureServiceBusConsumer
     {
+
+        private readonly string serviceBusConnectionString;
+        private readonly string subscriptionCheckOut;
+        private readonly string checkoutMessageTopic;
         private readonly OrderRepository _orderRepository;
 
-        public AzureServiceBusConsumer(OrderRepository orderRepository)
+        private ServiceBusProcessor checOutPRocessor;
+
+
+        private readonly IConfiguration _configuration;
+
+        public AzureServiceBusConsumer(OrderRepository orderRepository,
+                                       IConfiguration configuration)
         {
             _orderRepository = orderRepository;
+            _configuration = configuration;
+
+            serviceBusConnectionString = _configuration.GetValue<string>("ServiceBusConnectionString");
+            subscriptionCheckOut = _configuration.GetValue<string>("SubscriptionCheckOut");
+            checkoutMessageTopic = _configuration.GetValue<string>("CheckoutMessageTopic");
+
+
+            var client = new ServiceBusClient(serviceBusConnectionString);
+
+            checOutPRocessor = client.CreateProcessor(checkoutMessageTopic, subscriptionCheckOut);
+        }
+
+
+
+        public async Task Start()
+        {
+            checOutPRocessor.ProcessMessageAsync += OnCheckOutMessageReceived;
+            checOutPRocessor.ProcessErrorAsync += ErrorHandler;
+            await checOutPRocessor.StartProcessingAsync();
+        }
+
+        public async Task Stop()
+        {
+
+            await checOutPRocessor.StopProcessingAsync();
+            await checOutPRocessor.DisposeAsync();
+
+        }
+
+        private Task ErrorHandler(ProcessErrorEventArgs arg)
+        {
+            Console.WriteLine(arg.Exception.ToString());
+            return Task.CompletedTask;
         }
 
         private async Task OnCheckOutMessageReceived(ProcessMessageEventArgs args)
