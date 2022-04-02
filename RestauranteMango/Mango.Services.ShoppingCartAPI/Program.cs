@@ -21,7 +21,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 builder.Services.AddSingleton<IBaseMessage, AzureServiceBus>();
+
+
+builder.Services.AddHttpClient<ICouponRepository, CouponRepository>(
+    u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:CounponAPI"]));
+
+
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", opt =>
