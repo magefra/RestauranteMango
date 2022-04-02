@@ -1,23 +1,29 @@
-﻿using AutoMapper;
-using Mango.Services.ShoppingCartAPI.DbContexts;
-using Mango.Services.ShoppingCartAPI.Models.Dto;
+﻿using Mango.Services.ShoppingCartAPI.Models.Dto;
+using Newtonsoft.Json;
 
 namespace Mango.Services.ShoppingCartAPI.Repository
 {
     public class CouponRepository : ICouponRepository
     {
-        private readonly ApplicationDbContext _db;
-        private IMapper _mapper;
+        private readonly HttpClient _httpClient;
 
-        public CouponRepository(ApplicationDbContext applicationDbContext, IMapper mapper)
+        public CouponRepository(HttpClient httpClient)
         {
-            _db = applicationDbContext;
-            _mapper = mapper;
+            _httpClient = httpClient;
         }
 
-        public Task<CouponDto> GetCoupon(string couponName)
+        public async Task<CouponDto> GetCoupon(string couponName)
         {
-            throw new NotImplementedException();
+            var resposnse = await _httpClient.GetAsync($"/api/coupon/{couponName}");
+            var apiContent = await resposnse.Content.ReadAsStringAsync();
+            var resp = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
+
+            if (resp.IsSuccess)
+            {
+                return JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(resp.Result));
+            }
+
+            return new CouponDto();
         }
     }
 }
