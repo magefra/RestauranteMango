@@ -1,5 +1,4 @@
-
-namespace Mango.Services.Identity.Pages.Logout;
+namespace Mango.Services.Identity.Pages.Account.Logout;
 
 public class LogoutOptions
 {

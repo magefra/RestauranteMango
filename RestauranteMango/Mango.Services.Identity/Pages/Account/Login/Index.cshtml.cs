@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Mango.Services.Identity.Pages.Login;
+namespace Mango.Services.Identity.Pages.Account.Login;
 
 [SecurityHeaders]
 [AllowAnonymous]

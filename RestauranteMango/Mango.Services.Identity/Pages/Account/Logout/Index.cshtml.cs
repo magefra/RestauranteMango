@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Mango.Services.Identity.Pages.Logout;
+namespace Mango.Services.Identity.Pages.Account.Logout;
 
 [SecurityHeaders]
 [AllowAnonymous]

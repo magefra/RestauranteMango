@@ -4,7 +4,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Mango.Services.Identity.Pages.Login;
+namespace Mango.Services.Identity.Pages.Account.Login;
 
 public class InputModel
 {
