@@ -11,13 +11,16 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
     public class CartAPIController : Controller
     {
         private readonly ICartRepository _cartRepository;
+        private readonly ICouponRepository _couponRepository;
         private readonly IBaseMessage _baseMessage;
         protected ResponseDto _response;
 
         public CartAPIController(ICartRepository cartRepository,
+                                 ICouponRepository couponRepository,
                                  IBaseMessage baseMessage)
         {
             _cartRepository = cartRepository;
+            _couponRepository = couponRepository;
             _baseMessage = baseMessage;
             _response = new ResponseDto();
         }
@@ -163,6 +166,20 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
                     return BadRequest();
                 }
 
+                if (!string.IsNullOrEmpty(checkoutHeader.CouponCode))
+                {
+                    var coupon = await _couponRepository.GetCoupon(checkoutHeader.CouponCode);
+                    if (checkoutHeader.DiscountTotal != coupon.DiscountAmount)
+                    {
+                        _response.IsSuccess = false;
+                        _response.ErrorMessages = new List<string>()
+                        {
+                            "Coupon price has changed, please confirm"
+                        };
+                        _response.DisplayMessage = "Coupon price has changed, please confirm";
+                        return _response;
+                    }
+                }
 
                 checkoutHeader.CartDetails = cartDto.CartDetails;
                 // Logic to add message to proccess order
