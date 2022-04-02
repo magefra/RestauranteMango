@@ -16,8 +16,18 @@ namespace Mango.Services.OrderApi.Repository
         public async Task<bool> AddOrder(OrderHeader orderHeader)
         {
             await using var _db = new ApplicationDbContext(_dbContext);
+            _db.Entry(orderHeader).State = EntityState.Added;
             _db.OrderHeaders.Add(orderHeader);
-            await _db.SaveChangesAsync();
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
             return true;
         }
 
@@ -28,6 +38,7 @@ namespace Mango.Services.OrderApi.Repository
             if (orderHeaderFromDb != null)
             {
                 orderHeaderFromDb.PaymentStatus = paid;
+                _db.Entry(orderHeaderFromDb).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
             }
         }
