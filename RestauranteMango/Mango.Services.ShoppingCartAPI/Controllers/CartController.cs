@@ -187,7 +187,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
 
                 await _baseMessage.PublishMessage(checkoutHeader, "checkoutmessagetopic");
-
+                await _cartRepository.ClearCart(checkoutHeader.UserId);
 
             }
             catch (Exception e)
