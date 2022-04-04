@@ -122,6 +122,7 @@ namespace Mango.Services.OrderApi.Messaging
             try
             {
                 await _baseMessage.PublishMessage(paymentRequestMessage, orderPaymentProcessTopic);
+                await args.CompleteMessageAsync(args.Message);
             }
             catch (Exception ex)
             {

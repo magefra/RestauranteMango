@@ -21,13 +21,14 @@ namespace Mango.Services.OrderApi.Migrations
                     DiscountTotal = table.Column<double>(type: "float", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PickupDatatime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PickupDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CVV = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpiryMonthYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CartTotalItems = table.Column<int>(type: "int", nullable: false),
                     PaymentStatus = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

@@ -28,6 +28,16 @@ namespace Mango.Services.OrderApi.Repository
                 throw;
             }
 
+
+            foreach (var orderDetails in orderHeader.OrderDetails)
+            {
+                orderDetails.OrderHeaderId = orderHeader.OrderHeaderId;
+
+                _db.Entry(orderDetails).State = EntityState.Added;
+                _db.OrderDetails.Add(orderDetails);
+                await _db.SaveChangesAsync();
+            }
+
             return true;
         }
 
