@@ -1,3 +1,4 @@
+using Mango.messageBus;
 using Mango.Services.OrderApi.DbContexts;
 using Mango.Services.OrderApi.Extensions;
 using Mango.Services.OrderApi.Messaging;
@@ -27,6 +28,7 @@ builder.Services.AddSingleton(new OrderRepository(optionBuilder.Options));
 
 builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 
+builder.Services.AddSingleton<IBaseMessage, AzureServiceBus>();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", opt =>
     {
