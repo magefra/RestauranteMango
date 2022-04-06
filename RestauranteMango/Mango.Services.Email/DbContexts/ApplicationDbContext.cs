@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Mango.Services.Email.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mango.Services.Email.DbContexts
 {
@@ -11,9 +12,7 @@ namespace Mango.Services.Email.DbContexts
         }
 
 
-        public DbSet<OrderHeader> OrderHeaders { get; set; }
-
-        public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<EmailLog> EmailLogs { get; set; }
 
 
     }

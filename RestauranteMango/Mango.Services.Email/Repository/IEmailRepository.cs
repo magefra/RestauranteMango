@@ -1,8 +1,9 @@
-﻿namespace Mango.Services.Email.Repository
+﻿using Mango.Services.Email.Messages;
+
+namespace Mango.Services.Email.Repository
 {
     public interface IEmailRepository
     {
-        Task<bool> AddOrder(OrderHeader orderHeader);
-        Task UpdateOrderPaymentStatus(int orderHeaderId, bool paid);
+        Task SendAndLogEmail(UpdatePaymentResultMessage message);
     }
 }

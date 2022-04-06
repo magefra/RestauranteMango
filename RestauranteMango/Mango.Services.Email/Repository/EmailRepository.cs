@@ -1,4 +1,7 @@
-﻿using Mango.Services.OrderApi.DbContexts;
+﻿using Mango.Services.Email.DbContexts;
+using Mango.Services.Email.Messages;
+using Mango.Services.Email.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mango.Services.Email.Repository
 {
@@ -11,44 +14,21 @@ namespace Mango.Services.Email.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<bool> AddOrder(OrderHeader orderHeader)
+
+
+        public async Task SendAndLogEmail(UpdatePaymentResultMessage message)
         {
+            //implement an email sender or call some other class library
+            EmailLog emailLog = new EmailLog()
+            {
+                Email = message.Email,
+                EmailSent = DateTime.Now,
+                Log = $"Order - {message.OrderId} has been created successfully."
+            };
+
             await using var _db = new ApplicationDbContext(_dbContext);
-            _db.Entry(orderHeader).State = EntityState.Added;
-            _db.OrderHeaders.Add(orderHeader);
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-
-            foreach (var orderDetails in orderHeader.OrderDetails)
-            {
-                orderDetails.OrderHeaderId = orderHeader.OrderHeaderId;
-
-                _db.Entry(orderDetails).State = EntityState.Added;
-                _db.OrderDetails.Add(orderDetails);
-                await _db.SaveChangesAsync();
-            }
-
-            return true;
-        }
-
-        public async Task UpdateOrderPaymentStatus(int orderHeaderId, bool paid)
-        {
-            await using var _db = new ApplicationDbContext(_dbContext);
-            var orderHeaderFromDb = await _db.OrderHeaders.FirstOrDefaultAsync(u => u.OrderHeaderId == orderHeaderId);
-            if (orderHeaderFromDb != null)
-            {
-                orderHeaderFromDb.PaymentStatus = paid;
-                _db.Entry(orderHeaderFromDb).State = EntityState.Modified;
-                await _db.SaveChangesAsync();
-            }
+            _db.EmailLogs.Add(emailLog);
+            await _db.SaveChangesAsync();
         }
     }
 }

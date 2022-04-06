@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\Mango.Services.OrderApi\Mango.Services.OrderApi.csproj" />
   </ItemGroup>
 
 </Project>
