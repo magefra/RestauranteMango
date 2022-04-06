@@ -1,12 +1,7 @@
 ﻿using Azure.Messaging.ServiceBus;
-using Mango.messageBus;
-using Mango.Services.OrderApi.Messages;
-using Mango.Services.OrderApi.Models;
-using Mango.Services.OrderApi.Repository;
-using Newtonsoft.Json;
 using System.Text;
 
-namespace Mango.Services.OrderApi.Messaging
+namespace Mango.Services.Email.Messaging
 {
     public class AzureServiceBusConsumer : IAzureServiceBusConsumer
     {

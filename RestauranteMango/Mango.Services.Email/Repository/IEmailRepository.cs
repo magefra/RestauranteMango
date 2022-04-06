@@ -1,4 +1,4 @@
-﻿namespace Mango.Services.OrderApi.Repository
+﻿namespace Mango.Services.Email.Repository
 {
     public interface IEmailRepository
     {

@@ -1,8 +1,6 @@
 ﻿using Mango.Services.OrderApi.DbContexts;
-using Mango.Services.OrderApi.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace Mango.Services.OrderApi.Repository
+namespace Mango.Services.Email.Repository
 {
     public class EmailRepository : IEmailRepository
     {

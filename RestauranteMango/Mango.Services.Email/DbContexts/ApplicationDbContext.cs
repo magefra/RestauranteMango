@@ -1,7 +1,6 @@
-﻿using Mango.Services.OrderApi.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Mango.Services.OrderApi.DbContexts
+namespace Mango.Services.Email.DbContexts
 {
     public class ApplicationDbContext : DbContext
     {

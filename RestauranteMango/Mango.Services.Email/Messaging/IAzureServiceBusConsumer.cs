@@ -1,5 +1,5 @@
 ﻿
-namespace Mango.Services.OrderApi.Messaging
+namespace Mango.Services.Email.Messaging
 {
     public interface IAzureServiceBusConsumer
     {

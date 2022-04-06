@@ -1,4 +1,4 @@
-﻿namespace Mango.Services.OrderApi.Messages
+﻿namespace Mango.Services.Email.Messages
 {
     public class UpdatePaymentResultMessage
     {
