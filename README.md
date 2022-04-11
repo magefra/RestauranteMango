@@ -7,6 +7,10 @@
 - Microsoft.AspNetCore.Authentication.JwtBearer
 - Microsoft.EntityFrameworkCore.Tools
 - Microsoft.EntityFrameworkCore.SqlServer
+- Ocelot
+- Microsoft.Azure.ServiceBus
+- Azure.Messaging.ServiceBus
+- Duende.IdentityServer.AspNetIdentity
 
 ## Capturas
 ![projects_dependencies](docs/1.png)
