@@ -5,12 +5,12 @@ Microservicio con .NET Core MVC 6 e Integración de Identity Server con Azure Se
 ### Pre-requisitos 📋
 
 * Visual studio 2022 / Visual Studio Code
-* Microsoft .NET Core 5
+* Microsoft .NET Core 6
 
 
 ## Caracteristicas.
 * Entity Framework Core
-* Net 5
+* Net 6
 * NET Core API y MVC UI
 * Swagger
 * Repository Pattern - Generic
